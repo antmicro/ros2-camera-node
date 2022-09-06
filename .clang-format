@@ -1,0 +1,17 @@
+# Requires clang-format >= 15
+AlignAfterOpenBracket: AlwaysBreak
+AllowAllArgumentsOnNextLine: true
+AllowShortBlocksOnASingleLine: Never
+AllowShortCaseLabelsOnASingleLine: false
+AllowShortEnumsOnASingleLine: false
+AllowShortFunctionsOnASingleLine: None
+AllowShortLambdasOnASingleLine: All
+AlwaysBreakTemplateDeclarations: true
+BinPackArguments: false
+BinPackParameters: false
+BreakBeforeBraces: Allman
+ColumnLimit: 125
+IndentRequiresClause: false
+IndentWidth: 4
+PenaltyReturnTypeOnItsOwnLine: 1000
+RequiresClausePosition: OwnLine
