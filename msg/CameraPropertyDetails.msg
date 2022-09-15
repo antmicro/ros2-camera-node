@@ -1,0 +1,2 @@
+camera_node/CameraProperty property
+camera_node/CameraPropertyMenuEntry[] menu_entries

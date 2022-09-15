@@ -1,0 +1,3 @@
+[submodule "third-party/grabthecam"]
+	path = third-party/grabthecam
+	url = https://github.com/antmicro/grabthecam
