@@ -194,3 +194,5 @@ CameraNode::CameraNode(const rclcpp::NodeOptions &Options) : Node("camera_node",
 
 CameraNode::~CameraNode() {}
 } // namespace camera_node
+
+RCLCPP_COMPONENTS_REGISTER_NODE(camera_node::CameraNode)
