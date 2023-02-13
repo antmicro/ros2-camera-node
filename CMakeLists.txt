@@ -15,6 +15,7 @@ add_subdirectory(${PROJECT_SOURCE_DIR}/third-party/grabthecam)
 
 set(CAMERA_NODE_SRC
     src/camera_node_core.cpp
+    src/frames_fetcher_node.cpp
 )
 
 rosidl_generate_interfaces(${PROJECT_NAME}
@@ -27,6 +28,7 @@ rosidl_generate_interfaces(${PROJECT_NAME}
 
 rosidl_get_typesupport_target(cpp_typesupport_target ${PROJECT_NAME} "rosidl_typesupport_cpp")
 rclcpp_components_register_node(camera_node_lib PLUGIN "camera_node::CameraNode" EXECUTABLE camera_node_exe)
+rclcpp_components_register_node(camera_node_lib PLUGIN "camera_node::FrameFetcherNode" EXECUTABLE frame_fetcher_node_exe)
 
 add_library(camera_node_lib ${CAMERA_NODE_SRC})
 set_property(TARGET camera_node_lib PROPERTY OUTPUT_NAME camera_node)
