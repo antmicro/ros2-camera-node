@@ -16,7 +16,15 @@ def generate_launch_description():
                     name='camera_node',
                     parameters=[{
                         'camera_path': '/dev/video0'
-                         }],
+                    }],
+                    extra_arguments=[{'use_intra_process_comms': True}]),
+                ComposableNode(
+                    package='frame_fetcher_node',
+                    plugin='camera_node::FrameFetcherNode',
+                    name='frame_fetcher_node',
+                    parameters=[{
+                        'camera_path': '/dev/video0'
+                    }],
                     extra_arguments=[{'use_intra_process_comms': True}]),
         ],
         output='both',
