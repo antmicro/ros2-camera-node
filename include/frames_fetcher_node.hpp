@@ -1,29 +1,33 @@
 #pragma once
 
 #include "sensor_msgs/msg/image.hpp"
+#include "std_msgs/msg/header.hpp"
+#include "std_msgs/msg/string.hpp"
 #include <cv_bridge/cv_bridge.h>
 #include <functional>
-#include <opencv2/opencv.hpp>
+#include <memory>
 #include <rclcpp/rclcpp.hpp>
-#include <sensor_msgs/image_encodings.h>
-
-using std::placeholders::_1;
+#include <opencv2/opencv.hpp>
 
 namespace camera_node
 {
 
 class FrameFetcherNode : public rclcpp::Node
 {
+    void frame_fetcher_callback(const sensor_msgs::msg::Image &message) const;
+    rclcpp::Subscription<sensor_msgs::msg::Image>::SharedPtr frame_fetcher_sub;
+
   public:
     /**
-     * @brief Constructor for frameFetcherNode.
+     * @brief Constructor for FrameFetcherNode.
      *
      */
     FrameFetcherNode();
-
-  private:
-    void frame_fetcher_callback(const sensor_msgs::msg::Image &message) const;
-    rclcpp::Subscription<sensor_msgs::msg::Image>::SharedPtr frame_fetcher_sub;
-}
+    /**
+     * @brief Destructor for FrameFetcherNode.
+     *
+     */
+    ~FrameFetcherNode();
+};
 
 } // namespace camera_node
