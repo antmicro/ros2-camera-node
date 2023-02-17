@@ -1,7 +1,7 @@
-#include "grabthecam/cameracapture.hpp"
 #include "camera_node/srv/camera_get_properties.hpp"
 #include "camera_node/srv/camera_get_property_details.hpp"
 #include "cv_bridge/cv_bridge.h"
+#include "grabthecam/cameracapture.hpp"
 #include "rcl_interfaces/msg/set_parameters_result.hpp"
 #include "rclcpp/rclcpp.hpp"
 #include "rclcpp_components/register_node_macro.hpp"
@@ -131,4 +131,3 @@ class CameraNode : public rclcpp::Node
     ~CameraNode();
 };
 } // namespace camera_node
-RCLCPP_COMPONENTS_REGISTER_NODE(camera_node::CameraNode)
