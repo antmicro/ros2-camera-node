@@ -22,7 +22,7 @@ class FrameFetcherNode : public rclcpp::Node
      * @brief Constructor for FrameFetcherNode.
      *
      */
-    FrameFetcherNode();
+    FrameFetcherNode(const rclcpp::NodeOptions &options = rclcpp::NodeOptions());
     /**
      * @brief Destructor for FrameFetcherNode.
      *

@@ -1,5 +1,7 @@
 #include "frames_fetcher_node.hpp"
 
+#include "rclcpp_components/register_node_macro.hpp"
+
 namespace camera_node
 {
 void FrameFetcherNode::frame_fetcher_callback(const sensor_msgs::msg::Image &received_image) const
@@ -17,7 +19,7 @@ void FrameFetcherNode::frame_fetcher_callback(const sensor_msgs::msg::Image &rec
     cv::imshow(this->get_name(), cv_ptr->image);
 }
 
-FrameFetcherNode::FrameFetcherNode() : Node("frame_fetcher")
+FrameFetcherNode::FrameFetcherNode(const rclcpp::NodeOptions &options) : Node("frame_fetcher", options)
 {
     frame_fetcher_sub = this->create_subscription<sensor_msgs::msg::Image>(
         "camera_frame",
