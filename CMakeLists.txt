@@ -31,8 +31,6 @@ rosidl_generate_interfaces(${PROJECT_NAME}
 )
 
 rosidl_get_typesupport_target(cpp_typesupport_target ${PROJECT_NAME} "rosidl_typesupport_cpp")
-rclcpp_components_register_node(camera_node_lib PLUGIN "camera_node::CameraNode" EXECUTABLE camera_node_exe)
-rclcpp_components_register_node(camera_node_lib PLUGIN "camera_node::FrameFetcherNode" EXECUTABLE frame_fetcher_node_exe)
 
 add_library(camera_node_lib ${CAMERA_NODE_SRC})
 set_property(TARGET camera_node_lib PROPERTY OUTPUT_NAME camera_node)
@@ -81,6 +79,9 @@ ament_target_dependencies(frame_fetcher_node_lib
     sensor_msgs
     std_msgs
 )
+
+rclcpp_components_register_node(camera_node_lib PLUGIN "camera_node::CameraNode" EXECUTABLE camera_node_exe)
+rclcpp_components_register_node(frame_fetcher_node_lib PLUGIN "camera_node::FrameFetcherNode" EXECUTABLE frame_fetcher_node_exe)
 
 ament_export_dependencies(rosidl_default_runtime)
 ament_package()
