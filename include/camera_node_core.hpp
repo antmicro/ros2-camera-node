@@ -122,7 +122,7 @@ class CameraNode : public rclcpp::Node
      *
      * @param Options Internal parameters used by every Node's derivative.
      */
-    CameraNode(const rclcpp::NodeOptions &Options = rclcpp::NodeOptions());
+    CameraNode(const rclcpp::NodeOptions &options = rclcpp::NodeOptions());
 
     /**
      * @brief Destroy the Camera Node object.

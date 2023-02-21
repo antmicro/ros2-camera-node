@@ -143,7 +143,7 @@ void CameraNode::generate_mat_mappings()
     }
 }
 
-CameraNode::CameraNode(const rclcpp::NodeOptions &Options) : Node("camera_node", Options)
+CameraNode::CameraNode(const rclcpp::NodeOptions &options) : Node("camera_node", options)
 {
     rcl_interfaces::msg::ParameterDescriptor param_descriptor;
     param_descriptor.read_only = true;
