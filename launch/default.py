@@ -16,8 +16,7 @@ def generate_launch_description():
                     name='camera_node',
                     parameters=[{
                         'camera_path': '/dev/video0'
-                    }],
-                    extra_arguments=[{'use_intra_process_comms': True}]),
+                    }]),
         ],
         output='both',
     )
@@ -29,7 +28,7 @@ def generate_launch_description():
         executable='component_container',
         composable_node_descriptions=[
                 ComposableNode(
-                    package='frame_fetcher_node',
+                    package='camera_node',
                     plugin='camera_node::FrameFetcherNode',
                     name='frame_fetcher_node',
                 ),
@@ -37,5 +36,7 @@ def generate_launch_description():
         output='screen'
     )
 
-    return launch.LaunchDescription([camera_node_container],
-                                    [frame_fetcher_container])
+    return launch.LaunchDescription([
+        camera_node_container,
+        frame_fetcher_container
+    ])
