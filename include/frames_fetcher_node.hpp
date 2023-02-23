@@ -1,13 +1,14 @@
 #pragma once
 
+#include "rclcpp/logger.hpp"
 #include "sensor_msgs/msg/image.hpp"
 #include "std_msgs/msg/header.hpp"
 #include "std_msgs/msg/string.hpp"
 #include <cv_bridge/cv_bridge.h>
 #include <functional>
 #include <memory>
-#include <rclcpp/rclcpp.hpp>
 #include <opencv2/opencv.hpp>
+#include <rclcpp/rclcpp.hpp>
 
 namespace camera_node
 {

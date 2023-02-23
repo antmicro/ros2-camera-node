@@ -17,6 +17,7 @@ void FrameFetcherNode::frame_fetcher_callback(const sensor_msgs::msg::Image &rec
         return;
     }
     cv::imshow(this->get_name(), cv_ptr->image);
+    cv::waitKey(1);
 }
 
 FrameFetcherNode::FrameFetcherNode(const rclcpp::NodeOptions &options) : Node("frame_fetcher", options)
@@ -29,6 +30,5 @@ FrameFetcherNode::FrameFetcherNode(const rclcpp::NodeOptions &options) : Node("f
 
 FrameFetcherNode::~FrameFetcherNode() {}
 } // namespace camera_node
-
 
 RCLCPP_COMPONENTS_REGISTER_NODE(camera_node::FrameFetcherNode)
