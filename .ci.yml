@@ -1,0 +1,16 @@
+image: $CI_IMAGE
+before_script:
+  - source /opt/ros/setup.sh
+
+format:
+  script:
+    - mkdir build && cd build
+    - cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON ../
+    - make format
+    - test -z "$(git diff)" && exit 0 || exit 1
+  allow_failure: false
+
+example-build:
+  script:
+    - colcon build
+  allow_failure: false
