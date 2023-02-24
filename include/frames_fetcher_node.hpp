@@ -13,12 +13,13 @@ class FrameFetcherNode : public rclcpp::Node
   public:
     /**
      * @brief Constructor for FrameFetcherNode.
-     *
      */
     FrameFetcherNode(const rclcpp::NodeOptions &options = rclcpp::NodeOptions());
+    
     /**
      * @brief Destructor for FrameFetcherNode.
-     *
+     * 
+     * @param Options Internal parameters used by every Node's derivative.
      */
     ~FrameFetcherNode();
 };
