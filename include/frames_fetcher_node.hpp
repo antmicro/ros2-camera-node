@@ -1,18 +1,10 @@
 #pragma once
 
-#include "rclcpp/logger.hpp"
-#include "sensor_msgs/msg/image.hpp"
-#include "std_msgs/msg/header.hpp"
-#include "std_msgs/msg/string.hpp"
 #include <cv_bridge/cv_bridge.h>
-#include <functional>
-#include <memory>
-#include <opencv2/opencv.hpp>
 #include <rclcpp/rclcpp.hpp>
 
 namespace camera_node
 {
-
 class FrameFetcherNode : public rclcpp::Node
 {
     void frame_fetcher_callback(const sensor_msgs::msg::Image &message) const;
@@ -30,5 +22,4 @@ class FrameFetcherNode : public rclcpp::Node
      */
     ~FrameFetcherNode();
 };
-
 } // namespace camera_node

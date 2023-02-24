@@ -1,6 +1,7 @@
 #include "frames_fetcher_node.hpp"
-
 #include "rclcpp_components/register_node_macro.hpp"
+#include <functional>
+#include <opencv2/opencv.hpp>
 
 namespace camera_node
 {
@@ -13,7 +14,7 @@ void FrameFetcherNode::frame_fetcher_callback(const sensor_msgs::msg::Image &rec
     }
     catch (cv_bridge::Exception &e)
     {
-        RCLCPP_ERROR(rclcpp::get_logger("rclcpp"), "cv_bridge exception: %s", e.what());
+        RCLCPP_ERROR(this->get_logger(), "cv_bridge exception: %s", e.what());
         return;
     }
     cv::imshow(this->get_name(), cv_ptr->image);
