@@ -4,6 +4,16 @@ from launch_ros.descriptions import ComposableNode
 
 
 def generate_launch_description():
+    """
+    Generates launch description for scenario where
+    the frames derived by camera node are fetched and displayed
+    by frame_fetcher_node.
+
+    Returns:
+    --------
+    Launch description object
+
+    """
     camera_node_container = ComposableNodeContainer(
         name='camera_node_container',
         namespace='camera_node',
