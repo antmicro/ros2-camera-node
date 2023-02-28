@@ -1,4 +1,4 @@
-#include "frames_fetcher_node.hpp"
+#include "frame_fetcher_node.hpp"
 #include "rclcpp_components/register_node_macro.hpp"
 #include <functional>
 #include <opencv2/opencv.hpp>

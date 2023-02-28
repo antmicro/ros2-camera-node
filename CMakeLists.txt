@@ -19,7 +19,7 @@ include_directories(
     ${OpenCV_INCLUDE_DIRS}
 )
 
-add_library(frame_fetcher_node src/frames_fetcher_node.cpp)
+add_library(frame_fetcher_node src/frame_fetcher_node.cpp)
 add_library(camera_node_core src/camera_node_core.cpp)
 
 rosidl_generate_interfaces(${PROJECT_NAME}
