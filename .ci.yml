@@ -6,7 +6,7 @@ format:
   script:
     - mkdir build && cd build
     - cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON ../
-    - make format
+    - make camera_node_format
     - test -z "$(git diff)" && exit 0 || exit 1
   allow_failure: false
 
