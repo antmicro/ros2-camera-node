@@ -1,4 +1,9 @@
 image: $CI_IMAGE
+
+variables:
+    GIT_STRATEGY: clone
+    GIT_SUBMODULE_STRATEGY: recursive
+
 before_script:
   - source /opt/ros/setup.sh
 
