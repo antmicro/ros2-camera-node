@@ -18,6 +18,7 @@ include_directories(
     ${rclcpp_INCLUDE_DIRS}
     ${OpenCV_INCLUDE_DIRS}
 )
+add_subdirectory(third-party/grabthecam)
 
 add_library(frame_fetcher_node src/frame_fetcher_node.cpp)
 add_library(camera_node_core src/camera_node_core.cpp)
@@ -42,6 +43,12 @@ target_link_libraries(frame_fetcher_node
     ${OpenCV_LIBS}
 )
 
+
+install(
+    DIRECTORY launch 
+    DESTINATION share/${PROJECT_NAME}
+)
+
 install(
     TARGETS
         camera_node_core
@@ -49,8 +56,6 @@ install(
     INCLUDES DESTINATION include
     LIBRARY DESTINATION lib
 )
-
-install(DIRECTORY launch DESTINATION share/${PROJECT_NAME})
 
 ament_target_dependencies(camera_node_core
     cv_bridge
