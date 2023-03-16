@@ -47,7 +47,7 @@ target_link_libraries(frame_fetcher_node
 
 
 install(
-    DIRECTORY launch 
+    DIRECTORY launch
     DESTINATION share/${PROJECT_NAME}
 )
 
@@ -83,10 +83,13 @@ ament_export_dependencies(rosidl_default_runtime)
 if(BUILD_TESTING)
     find_package(ament_cmake_clang_format REQUIRED)
     find_package(ament_cmake_clang_tidy REQUIRED)
-    ament_clang_tidy(${CMAKE_BINARY_DIR})
     ament_clang_format(CONFIG_FILE ".clang-format"
-                       "include" 
-                       "src")
+        "include"
+        "src")
+    ament_clang_tidy(CONFIG_FILE ".clang-format"
+        ${CMAKE_BINARY_DIR}/compile_commands.json
+        "include"
+        "src")
 endif()
 
 
