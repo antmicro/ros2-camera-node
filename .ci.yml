@@ -7,13 +7,9 @@ variables:
 before_script:
   - source /opt/ros/setup.sh
 
-format:
-  script:
-    - colcon test
-    - colcon test-result
-  allow_failure: false
-
 example-build:
   script:
     - colcon build
+    - colcon test
+    - colcon test-result
   allow_failure: false
