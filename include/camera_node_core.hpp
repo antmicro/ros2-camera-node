@@ -71,9 +71,8 @@ class CameraNode : public rclcpp::Node
      * @param request Request body for this call.
      * @param response Response body for this call.
      */
-    void camera_get_properties_callback(
-        const camera_node::srv::CameraGetProperties::Request::SharedPtr request,
-        camera_node::srv::CameraGetProperties::Response::SharedPtr response);
+    void camera_get_properties_callback(const camera_node::srv::CameraGetProperties::Request::SharedPtr request,
+                                        camera_node::srv::CameraGetProperties::Response::SharedPtr response);
 
     /**
      * @brief Callback for camera_get_property_details service.
@@ -81,9 +80,9 @@ class CameraNode : public rclcpp::Node
      * @param request Request body for this call.
      * @param response Response body for this call.
      */
-    void camera_get_property_details_callback(
-        const camera_node::srv::CameraGetPropertyDetails::Request::SharedPtr request,
-        camera_node::srv::CameraGetPropertyDetails::Response::SharedPtr response);
+    void
+    camera_get_property_details_callback(const camera_node::srv::CameraGetPropertyDetails::Request::SharedPtr request,
+                                         camera_node::srv::CameraGetPropertyDetails::Response::SharedPtr response);
 
     /**
      * @brief A callback method that is to be executed every time this Node tries to post to a CameraFrame topic.
@@ -116,7 +115,7 @@ class CameraNode : public rclcpp::Node
      */
     void generate_mat_mappings();
 
-  public:
+public:
     /**
      * @brief Constructs a new CameraNode object.
      *
