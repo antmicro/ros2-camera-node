@@ -12,6 +12,8 @@ find_package(rosidl_default_generators REQUIRED)
 find_package(sensor_msgs REQUIRED)
 find_package(std_msgs REQUIRED)
 
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
 include_directories(
     include
     third-party/grabthecam/include
@@ -80,8 +82,8 @@ ament_export_dependencies(rosidl_default_runtime)
 
 if(BUILD_TESTING)
     find_package(ament_cmake_clang_format REQUIRED)
-    # find_package(ament_cmake_clang_tidy REQUIRED)
-    # ament_clang_tidy(${CMAKE_BINARY_DIR})
+    find_package(ament_cmake_clang_tidy REQUIRED)
+    ament_clang_tidy(${CMAKE_BINARY_DIR})
     ament_clang_format(CONFIG_FILE ".clang-format"
                        "include" 
                        "src")
