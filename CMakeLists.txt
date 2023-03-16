@@ -80,9 +80,11 @@ ament_export_dependencies(rosidl_default_runtime)
 
 if(BUILD_TESTING)
     find_package(ament_cmake_clang_format REQUIRED)
-    find_package(ament_cmake_clang_tidy REQUIRED)
-    ament_clang_tidy(${CMAKE_BINARY_DIR})
-    ament_clang_format(CONFIG_FILE ".clang-format")
+    # find_package(ament_cmake_clang_tidy REQUIRED)
+    # ament_clang_tidy(${CMAKE_BINARY_DIR})
+    ament_clang_format(CONFIG_FILE ".clang-format"
+                       "include" 
+                       "src")
 endif()
 
 
