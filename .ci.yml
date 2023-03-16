@@ -11,5 +11,5 @@ example-build:
   script:
     - colcon build
     - colcon test
-    - colcon test-result
+    - colcon test-result --verbose
   allow_failure: false
