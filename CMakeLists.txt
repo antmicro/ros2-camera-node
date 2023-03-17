@@ -22,9 +22,6 @@ include_directories(
 )
 add_subdirectory(third-party/grabthecam)
 
-add_library(frame_fetcher_node SHARED src/frame_fetcher_node.cpp)
-add_library(camera_node_core SHARED src/camera_node_core.cpp)
-
 rosidl_generate_interfaces(${PROJECT_NAME}
     msg/CameraProperty.msg
     msg/CameraPropertyDetails.msg
@@ -35,9 +32,25 @@ rosidl_generate_interfaces(${PROJECT_NAME}
 
 rosidl_get_typesupport_target(cpp_typesupport_target ${PROJECT_NAME} "rosidl_typesupport_cpp")
 
+add_library(camera_node_core SHARED
+    src/camera_node_core.cpp
+)
+
 target_link_libraries(camera_node_core
     ${cpp_typesupport_target}
     grabthecam
+)
+
+ament_target_dependencies(camera_node_core
+    cv_bridge
+    rclcpp
+    rclcpp_components
+    sensor_msgs
+    std_msgs
+)
+
+add_library(frame_fetcher_node SHARED
+    src/frame_fetcher_node.cpp
 )
 
 target_link_libraries(frame_fetcher_node
@@ -45,6 +58,13 @@ target_link_libraries(frame_fetcher_node
     ${OpenCV_LIBS}
 )
 
+ament_target_dependencies(frame_fetcher_node
+    cv_bridge
+    rclcpp
+    rclcpp_components
+    sensor_msgs
+    std_msgs
+)
 
 install(
     DIRECTORY launch
@@ -59,22 +79,6 @@ install(
     LIBRARY DESTINATION lib
 )
 
-ament_target_dependencies(camera_node_core
-    cv_bridge
-    rclcpp
-    rclcpp_components
-    sensor_msgs
-    std_msgs
-)
-
-ament_target_dependencies(frame_fetcher_node
-    cv_bridge
-    rclcpp
-    rclcpp_components
-    sensor_msgs
-    std_msgs
-)
-
 rclcpp_components_register_node(camera_node_core PLUGIN "camera_node::CameraNode" EXECUTABLE camera_node_exe)
 rclcpp_components_register_node(frame_fetcher_node PLUGIN "camera_node::FrameFetcherNode" EXECUTABLE frame_fetcher_node_exe)
 
@@ -83,13 +87,17 @@ ament_export_dependencies(rosidl_default_runtime)
 if(BUILD_TESTING)
     find_package(ament_cmake_clang_format REQUIRED)
     find_package(ament_cmake_clang_tidy REQUIRED)
+
     ament_clang_format(CONFIG_FILE ".clang-format"
         "include"
-        "src")
+        "src"
+    )
+
     ament_clang_tidy(CONFIG_FILE ".clang-format"
         ${CMAKE_BINARY_DIR}/compile_commands.json
         "include"
-        "src")
+        "src"
+    )
 endif()
 
 ament_package()
