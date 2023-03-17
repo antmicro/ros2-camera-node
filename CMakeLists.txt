@@ -22,8 +22,8 @@ include_directories(
 )
 add_subdirectory(third-party/grabthecam)
 
-add_library(frame_fetcher_node src/frame_fetcher_node.cpp)
-add_library(camera_node_core src/camera_node_core.cpp)
+add_library(frame_fetcher_node SHARED src/frame_fetcher_node.cpp)
+add_library(camera_node_core SHARED src/camera_node_core.cpp)
 
 rosidl_generate_interfaces(${PROJECT_NAME}
     msg/CameraProperty.msg
@@ -91,6 +91,5 @@ if(BUILD_TESTING)
         "include"
         "src")
 endif()
-
 
 ament_package()
