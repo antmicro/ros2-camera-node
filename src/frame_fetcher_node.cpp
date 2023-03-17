@@ -5,6 +5,7 @@
 
 namespace camera_node
 {
+using namespace std::placeholders;
 void FrameFetcherNode::frame_fetcher_callback(const sensor_msgs::msg::Image &received_image) const
 {
     cv_bridge::CvImagePtr cv_ptr;
@@ -24,7 +25,9 @@ void FrameFetcherNode::frame_fetcher_callback(const sensor_msgs::msg::Image &rec
 FrameFetcherNode::FrameFetcherNode(const rclcpp::NodeOptions &options) : Node("frame_fetcher", options)
 {
     frame_fetcher_sub = this->create_subscription<sensor_msgs::msg::Image>(
-        "camera_frame", 1, std::bind(&FrameFetcherNode::frame_fetcher_callback, this, std::placeholders::_1));
+        "camera_frame",
+        1,
+        std::bind(&FrameFetcherNode::frame_fetcher_callback, this, _1));
 }
 
 FrameFetcherNode::~FrameFetcherNode() {}
