@@ -3,6 +3,8 @@ set(CMAKE_CXX_STANDARD 20)
 
 project(camera_node)
 
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
 find_package(ament_cmake REQUIRED)
 find_package(cv_bridge REQUIRED)
 find_package(OpenCV REQUIRED)
@@ -11,9 +13,18 @@ find_package(rclcpp_components REQUIRED)
 find_package(rosidl_default_generators REQUIRED)
 find_package(sensor_msgs REQUIRED)
 find_package(std_msgs REQUIRED)
-find_package(grabthecam REQUIRED)
+find_package(grabthecam QUIET)
 
-set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+if(NOT grabthecam_FOUND)
+    message("grabthecam not found")
+    include(ExternalProject)
+    ExternalProject_Add(grabthecam_external
+        GIT_REPOSITORY https://github.com/antmicro/grabthecam
+        GIT_TAG main
+    )
+else()
+    message("using system grabthecam")
+endif()
 
 include_directories(
     include
