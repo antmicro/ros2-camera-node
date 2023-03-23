@@ -11,16 +11,16 @@ find_package(rclcpp_components REQUIRED)
 find_package(rosidl_default_generators REQUIRED)
 find_package(sensor_msgs REQUIRED)
 find_package(std_msgs REQUIRED)
+find_package(grabthecam REQUIRED)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 include_directories(
     include
-    third-party/grabthecam/include
+    ${grabthecam_INCLUDE_DIRS}
     ${rclcpp_INCLUDE_DIRS}
     ${OpenCV_INCLUDE_DIRS}
 )
-add_subdirectory(third-party/grabthecam)
 
 rosidl_generate_interfaces(${PROJECT_NAME}
     msg/CameraProperty.msg
