@@ -32,16 +32,16 @@ rosidl_generate_interfaces(${PROJECT_NAME}
 
 rosidl_get_typesupport_target(cpp_typesupport_target ${PROJECT_NAME} "rosidl_typesupport_cpp")
 
-add_library(camera_node_core SHARED
+add_library(${PROJECT_NAME}_component SHARED
     src/camera_node_core.cpp
 )
 
-target_link_libraries(camera_node_core
+target_link_libraries(${PROJECT_NAME}_component
     ${cpp_typesupport_target}
     grabthecam
 )
 
-ament_target_dependencies(camera_node_core
+ament_target_dependencies(${PROJECT_NAME}_component
     cv_bridge
     rclcpp
     rclcpp_components
@@ -73,13 +73,13 @@ install(
 
 install(
     TARGETS
-        camera_node_core
+        ${PROJECT_NAME}_component
         frame_fetcher_node
     INCLUDES DESTINATION include
     LIBRARY DESTINATION lib
 )
 
-rclcpp_components_register_node(camera_node_core PLUGIN "camera_node::CameraNode" EXECUTABLE camera_node_exe)
+rclcpp_components_register_node(${PROJECT_NAME}_component PLUGIN "camera_node::CameraNode" EXECUTABLE camera_node_exe)
 rclcpp_components_register_node(frame_fetcher_node PLUGIN "camera_node::FrameFetcherNode" EXECUTABLE frame_fetcher_node_exe)
 
 ament_export_dependencies(rosidl_default_runtime)
