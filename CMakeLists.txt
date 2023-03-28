@@ -13,33 +13,19 @@ find_package(rclcpp_components REQUIRED)
 find_package(rosidl_default_generators REQUIRED)
 find_package(sensor_msgs REQUIRED)
 find_package(std_msgs REQUIRED)
-find_package(grabthecam QUIET)
 
 if(NOT grabthecam_FOUND)
-    message("grabthecam not found")
-    include(ExternalProject)
-    ExternalProject_Add(grabthecam_external
+    message("grabthecam not found - building it")
+    include(FetchContent)
+    FetchContent_Declare(grabthecam
         GIT_REPOSITORY https://github.com/antmicro/grabthecam
         GIT_TAG main
-        PREFIX ${CMAKE_CURRENT_BINARY_DIR}/grabthecam
     )
-    ExternalProject_Get_Property(grabthecam_external INSTALL_DIR)
-    set(grabthecam_INCLUDE_DIRS ${INSTALL_DIR}/src/grabthecam_external/include)
-    set(GRAB_TARGET grabthecam_external)
-    include_directories(
-        ${grabthecam_INCLUDE_DIRS}
-    )
-    set(grabthecam_LIBS ${INSTALL_DIR}/src/grabthecam_external-build/)
-    link_directories(${INSTALL_DIR}
-        grabthecam_LIBS)
-else()
-    message("using system grabthecam")
-    set(GRAB_TARGET grabthecam)
+    FetchContent_MakeAvailable(grabthecam)
 endif()
 
 include_directories(
     include
-    # ${grabthecam_INCLUDE_DIRS}
     ${rclcpp_INCLUDE_DIRS}
     ${OpenCV_INCLUDE_DIRS}
 )
@@ -58,12 +44,9 @@ add_library(${PROJECT_NAME}_component SHARED
     src/camera_node_core.cpp
 )
 
-add_dependencies(${PROJECT_NAME}_component
-    ${GRAB_TARGET}
-)
-
 target_link_libraries(${PROJECT_NAME}_component
     ${cpp_typesupport_target}
+    grabthecam
 )
 
 ament_target_dependencies(${PROJECT_NAME}_component
