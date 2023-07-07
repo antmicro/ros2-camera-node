@@ -6,7 +6,6 @@ project(camera_node)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 find_package(ament_cmake REQUIRED)
-find_package(cv_bridge REQUIRED)
 find_package(OpenCV REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(rclcpp_components REQUIRED)
@@ -50,7 +49,6 @@ target_link_libraries(${PROJECT_NAME}_component
 )
 
 ament_target_dependencies(${PROJECT_NAME}_component
-    cv_bridge
     rclcpp
     rclcpp_components
     sensor_msgs
@@ -67,7 +65,6 @@ target_link_libraries(frame_fetcher_node
 )
 
 ament_target_dependencies(frame_fetcher_node
-    cv_bridge
     rclcpp
     rclcpp_components
     sensor_msgs
