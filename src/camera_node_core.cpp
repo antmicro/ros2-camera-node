@@ -87,7 +87,12 @@ void CameraNode::camera_frame_callback()
 {
     auto frame = camera->capture();
     auto message = sensor_msgs::msg::Image();
-    cv_bridge::CvImage(std_msgs::msg::Header(), cvmat_type_to_str[frame.type()], frame).toImageMsg(message);
+    message.header = std_msgs::msg::Header();
+    message.encoding = cvmat_type_to_str[frame.type()];
+    message.height = frame.rows;
+    message.width = frame.cols;
+    message.step = static_cast<sensor_msgs::msg::Image::_step_type>(frame.step);
+    message.data.assign(frame.datastart, frame.dataend);
 
     camera_frame_pub->publish(message);
 }

@@ -1,6 +1,5 @@
 #include "camera_node/srv/camera_get_properties.hpp"
 #include "camera_node/srv/camera_get_property_details.hpp"
-#include "cv_bridge/cv_bridge.h"
 #include "grabthecam/cameracapture.hpp"
 #include "rcl_interfaces/msg/set_parameters_result.hpp"
 #include "rclcpp/rclcpp.hpp"
