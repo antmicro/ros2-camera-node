@@ -1,25 +1,27 @@
 #include "frame_fetcher_node.hpp"
 #include "rclcpp_components/register_node_macro.hpp"
 #include <functional>
-#include <opencv2/opencv.hpp>
 
 namespace camera_node
 {
 using namespace std::placeholders;
-void FrameFetcherNode::frame_fetcher_callback(const sensor_msgs::msg::Image &received_image) const
+void FrameFetcherNode::frame_fetcher_callback(const sensor_msgs::msg::Image &received_image)
 {
-    cv_bridge::CvImagePtr cv_ptr;
-    try
-    {
-        cv_ptr = cv_bridge::toCvCopy(received_image);
-    }
-    catch (cv_bridge::Exception &e)
-    {
-        RCLCPP_ERROR(this->get_logger(), "cv_bridge exception: %s", e.what());
-        return;
-    }
-    cv::imshow(this->get_name(), cv_ptr->image);
+    cv::Mat image = cv::Mat(
+        received_image.height,
+        received_image.width,
+        extract_encoding(received_image.encoding),
+        const_cast<uint8_t *>(received_image.data.data()),
+        received_image.step);
+    cv::imshow(this->get_name(), image);
     cv::waitKey(1);
+}
+
+int FrameFetcherNode::extract_encoding(const std::string &encoding)
+{
+    std::string prefix = encoding.substr(0, encoding.find('C'));
+    int channels = std::stoi(encoding.substr(encoding.find('C') + 1));
+    return CV_MAKETYPE(encoding_map[prefix], channels);
 }
 
 FrameFetcherNode::FrameFetcherNode(const rclcpp::NodeOptions &options) : Node("frame_fetcher", options)
