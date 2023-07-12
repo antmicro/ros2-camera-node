@@ -97,10 +97,7 @@ void CameraNode::camera_frame_callback()
     camera_frame_pub->publish(message);
 }
 
-void CameraNode::camera_frame_loopback_callback(const sensor_msgs::msg::Image &message)
-{
-    camera_frame_counter++;
-}
+void CameraNode::camera_frame_loopback_callback(const sensor_msgs::msg::Image &message) { camera_frame_counter++; }
 
 void CameraNode::camera_frame_info_callback()
 {
