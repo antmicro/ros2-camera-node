@@ -8,7 +8,7 @@ using namespace std::placeholders;
 rcl_interfaces::msg::SetParametersResult
 CameraNode::parameters_set_callback(const std::vector<rclcpp::Parameter> &parameters)
 {
-    RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "Reconfiguring camera");
+    RCLCPP_INFO(get_logger(), "Reconfiguring camera");
     for (const auto &parameter : parameters)
     {
         if (parameters_name_to_index.contains(parameter.get_name()))
@@ -38,7 +38,7 @@ CameraNode::parameters_set_callback(const std::vector<rclcpp::Parameter> &parame
             camera_frame_counter = 0;
             camera_frame_time_point = std::chrono::steady_clock::now();
         }
-        RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "Setting [%s]", parameter.get_name().c_str());
+        RCLCPP_INFO(get_logger(), "Setting [%s]", parameter.get_name().c_str());
     }
 
     rcl_interfaces::msg::SetParametersResult result;
@@ -106,7 +106,7 @@ void CameraNode::camera_frame_info_callback()
         std::chrono::duration<double, std::ratio<1L>>(std::chrono::steady_clock::now() - camera_frame_time_point)
             .count();
 
-    RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "Camera framerate: [%f]", frequency);
+    RCLCPP_INFO(get_logger(), "Camera framerate: [%f]", frequency);
     camera_frame_counter = 0;
     camera_frame_time_point = std::chrono::steady_clock::now();
 }
