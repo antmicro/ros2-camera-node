@@ -111,7 +111,7 @@ void CameraNode::camera_frame_info_callback()
     camera_frame_time_point = std::chrono::steady_clock::now();
 }
 
-void CameraNode::prepare_internal_parameters()
+void CameraNode::prepare_driver_parameters()
 {
     for (auto &&[index, name, type, default_value] : camera->queryProperties())
     {
@@ -125,7 +125,7 @@ void CameraNode::prepare_internal_parameters()
         std::replace(name.begin(), name.end(), ' ', '_');
 
         parameters_name_to_index[name] = index;
-        declare_parameter<int32_t>("camera_internal_" + name, default_value);
+        declare_parameter<int32_t>("camera_driver_" + name, default_value);
     }
 }
 
@@ -165,7 +165,7 @@ CameraNode::CameraNode(const rclcpp::NodeOptions &options) : Node("camera_node",
             static_cast<uint32_t>(get_parameter("camera_frame_dim").as_integer_array()[1]));
     }
 
-    prepare_internal_parameters();
+    prepare_driver_parameters();
     generate_mat_mappings();
     camera_frame_counter = 0;
     camera_frame_time_point = std::chrono::steady_clock::now();

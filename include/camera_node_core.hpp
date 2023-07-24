@@ -27,7 +27,7 @@ namespace camera_node
  * - camera_frame_dim : Target dimensions [width, height] of the frame to be streamed by a camera.
  * - camera_refresh_rate : Frequency at which this node will try to grab new frames from camera.
  * - camera_info_rate : Frequency at which this node will log information about the framerate.
- * - camera_internal_{...} : Internal camera parameters, queried from driver by the node at the start.
+ * - camera_driver_{...} : Camera parameters from driver, queried from driver by the node at the start.
  */
 class CameraNode : public rclcpp::Node
 {
@@ -107,7 +107,7 @@ class CameraNode : public rclcpp::Node
      * @brief A method that queries driver for available camera controls and assigns them to Node's parameters.
      *
      */
-    void prepare_internal_parameters();
+    void prepare_driver_parameters();
 
     /**
      * @brief Generates mapping for cv::Mat types.

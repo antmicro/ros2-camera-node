@@ -51,8 +51,6 @@ public:
 
     /**
      * @brief Destructor for FrameFetcherNode.
-     *
-     * @param Options Internal parameters used by every Node's derivative.
      */
     ~FrameFetcherNode();
 };
