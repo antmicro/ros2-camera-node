@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2022-2023 Antmicro <www.antmicro.com>
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 #include "frame_fetcher_node.hpp"
 #include "rclcpp_components/register_node_macro.hpp"
 #include <functional>

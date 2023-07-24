@@ -1,3 +1,7 @@
+# Copyright (c) 2022-2023 Antmicro <www.antmicro.com>
+#
+# SPDX-License-Identifier: Apache-2.0
+
 # Types
 uint8 V4L2_CTRL_TYPE_INTEGER = 1
 uint8 V4L2_CTRL_TYPE_BOOLEAN = 2

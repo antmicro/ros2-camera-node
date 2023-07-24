@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2022-2023 Antmicro <www.antmicro.com>
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 #include "camera_node/srv/camera_get_properties.hpp"
 #include "camera_node/srv/camera_get_property_details.hpp"
 #include "grabthecam/cameracapture.hpp"
