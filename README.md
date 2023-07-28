@@ -2,7 +2,7 @@
 
 Copyright (c) 2022-2023 [Antmicro](https://www.antmicro.com)
 
-`CameraNode` is a ROS 2 node that allows to stream frames from V4L2 cameras.
+`CameraNode` is a ROS 2 node for streaming frames from V4L2 cameras.
 It provides parameters to manipulate camera properties and exposes a service to query and modify available properties.
 
 ## CameraNode parameters
@@ -18,7 +18,7 @@ It provides parameters to manipulate camera properties and exposes a service to 
 ## Dependencies
 
 * [ROS 2 Humble](https://docs.ros.org/en/humble/index.html) environment - follow [installation instructions](https://docs.ros.org/en/humble/Installation.html) for your system
-* [OpenCV](https://github.com/opencv/opencv) - can be installed with package manager.
+* [OpenCV](https://github.com/opencv/opencv) - can be installed with package manager
 * [grabthecam](https://github.com/antmicro/grabthecam) - A C++ library for controlling V4L2 cameras and capturing frames.
   When not found in the filesystem, it will be downloaded and built automatically.
 
@@ -43,9 +43,9 @@ Follow the steps below to build the project:
   colcon build
   ```
 
-After this, the built packages can be found in the `install/` directory (placed in the current directory).
+Then, the built packages can be found in the `install/` directory (placed in the current directory).
 
-The camera node is built as [composable node](https://docs.ros.org/en/humble/Tutorials/Intermediate/Composition.html), registered as `camera_node::CameraNode` and available under `libcamera_node_component.so` in `install/camera_node/lib` directory.
+The `CameraNode` is built as [composable node](https://docs.ros.org/en/humble/Tutorials/Intermediate/Composition.html), registered as `camera_node::CameraNode` and available under `libcamera_node_component.so` in the `install/camera_node/lib` directory.
 
 ## Running the CameraNode
 
@@ -53,7 +53,7 @@ To run the `camera_node::CameraNode`, a ROS 2 component container is required.
 The easiest way to start the composable nodes and their components is to use ROS2 launch files.
 For more details, check [Using ROS 2 launch to launch composable nodes](https://docs.ros.org/en/humble/How-To-Guides/Launching-composable-nodes.html).
 
-The sample launch file for this node can be found in [launch/camera_node_demo.py](launch/camera_node_demo.py) file.
+A sample launch file for this node can be found under: [launch/camera_node_demo.py](launch/camera_node_demo.py).
 
 To run this sample launch file, first update the ROS 2 environment with the built `setup.sh` script from the `install/` directory:
 
@@ -78,15 +78,15 @@ To see available arguments for the launch script, run:
 ros2 launch camera_node camera_node_demo.py --show-arguments
 ```
 
-For example, to change the path to the camera device, use `camera_path:=<new-path>` argument, i.e.:
+To, e.g., change the path to the camera device, use the `camera_path:=<new-path>` argument, i.e.:
 
 ```bash
 ros2 launch camera_node camera_node_demo.py camera_path:=/dev/video1
 ```
 
-## Configuring the camera using CameraNode
+## Configuring a camera using CameraNode
 
-This implementation leverages V4L2 API in the [grabthecam](https://github.com/antmicro/grabthecam) library and [ROS 2 parameters](https://docs.ros.org/en/foxy/Tutorials/Beginner-CLI-Tools/Understanding-ROS2-Parameters/Understanding-ROS2-Parameters.html) to introduce all of the camera settings to the [ROS 2 Service](https://docs.ros.org/en/foxy/Tutorials/Beginner-CLI-Tools/Understanding-ROS2-Services/Understanding-ROS2-Services.html) ecosystem.
+This implementation leverages the V4L2 API in the [grabthecam](https://github.com/antmicro/grabthecam) library and [ROS 2 parameters](https://docs.ros.org/en/foxy/Tutorials/Beginner-CLI-Tools/Understanding-ROS2-Parameters/Understanding-ROS2-Parameters.html) to introduce all camera settings to the [ROS 2 Service](https://docs.ros.org/en/foxy/Tutorials/Beginner-CLI-Tools/Understanding-ROS2-Services/Understanding-ROS2-Services.html) ecosystem.
 
 All parameters of any node can be listed, read and modified using ROS 2 services, such as `describe_parameters`, `get_parameter_types`, `get_parameters`, `set_parameters`, `list_parameters`.
 They are created for every created node.
@@ -97,7 +97,7 @@ To check parameter-related services, run the `CameraNode` as previously:
 ros2 launch camera_node camera_node_demo.py
 ```
 
-and then (in a separate terminal with loaded environment from `install/setup.sh`) run:
+and then (in a separate terminal, with the environment loaded from `install/setup.sh`) run:
 
 ```bash
 ros2 service list
@@ -105,12 +105,12 @@ ros2 service list
 
 This, among others, should list the following services:
 
-* `/camera_node/describe_parameters` - provides descriptions for provided parameters' names in the request
-* `/camera_node/get_parameter_types` - provides types for provided parameters' names in the request
-* `/camera_node/get_parameters` - provides values of parameters listed in the request
+* `/camera_node/describe_parameters` - provides descriptions for parameter names provided in the request
+* `/camera_node/get_parameter_types` - provides types for parameter names provided in the request
+* `/camera_node/get_parameters` - provides values for parameters listed in the request
 * `/camera_node/list_parameters` - lists available parameters
-* `/camera_node/set_parameters` - sets values of parameters listed in the request
-* `/camera_node/set_parameters_atomically` - sets values of parameters listed in the request, atomically.
+* `/camera_node/set_parameters` - sets values for parameters listed in the request
+* `/camera_node/set_parameters_atomically` - sets values for parameters listed in the request, atomically.
 
 
 The above services can be accessed through:
@@ -126,7 +126,7 @@ For `CameraNode`, the command:
 ros2 param list --param-type
 ```
 
-Will for example display:
+Will display, e.g.:
 
 ```
 /camera_node:
@@ -158,4 +158,4 @@ Will for example display:
   use_sim_time (type: boolean)
 ```
 
-The parameters starting with `camera_driver_` are formed from driver-provided settings, specific to the camera.
+The parameters starting with `camera_driver_` are formed from driver-provided settings specific to the camera.
