@@ -130,7 +130,7 @@ void CameraNode::prepare_driver_parameters()
         std::transform(name.begin(), name.end(), name.begin(), [](auto &c) { return std::tolower(c); });
         std::replace(name.begin(), name.end(), ' ', '_');
 
-        parameters_name_to_index[name] = index;
+        parameters_name_to_index["camera_driver_" + name] = index;
         declare_parameter<int32_t>("camera_driver_" + name, default_value);
     }
 }
