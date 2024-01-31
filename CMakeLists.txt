@@ -16,6 +16,7 @@ find_package(rclcpp_components REQUIRED)
 find_package(rosidl_default_generators REQUIRED)
 find_package(sensor_msgs REQUIRED)
 find_package(std_msgs REQUIRED)
+find_package(grabthecam QUIET)
 
 if(NOT grabthecam_FOUND)
     message("grabthecam not found - building it")
