@@ -14,12 +14,29 @@ using namespace std::placeholders;
 rcl_interfaces::msg::SetParametersResult
 CameraNode::parameters_set_callback(const std::vector<rclcpp::Parameter> &parameters)
 {
-    RCLCPP_INFO(get_logger(), "Reconfiguring camera");
+    RCLCPP_DEBUG(get_logger(), "Reconfiguring camera");
+    rcl_interfaces::msg::SetParametersResult result;
+    result.successful = true;
+    result.reason = "success";
     for (const auto &parameter : parameters)
     {
         if (parameters_name_to_index.contains(parameter.get_name()))
         {
-            camera->set<int64_t>(parameters_name_to_index[parameter.get_name()], parameter.as_int());
+            try
+            {
+                camera->set<int64_t>(parameters_name_to_index[parameter.get_name()], parameter.as_int());
+            }
+            catch (const grabthecam::CameraException &e)
+            {
+                std::ostringstream oss;
+                oss << "Failed to set parameter [" << parameter.get_name() << "] with value [" << parameter.as_int()
+                    << "]";
+                RCLCPP_ERROR(get_logger(), "%s", oss.str().c_str());
+                RCLCPP_ERROR(get_logger(), "Exception: [%s]", e.what());
+                result.successful = false;
+                result.reason = oss.str();
+                return result;
+            }
         }
         else if (parameter.get_name() == "camera_frame_dim")
         {
@@ -44,13 +61,8 @@ CameraNode::parameters_set_callback(const std::vector<rclcpp::Parameter> &parame
             camera_frame_counter = 0;
             camera_frame_time_point = std::chrono::steady_clock::now();
         }
-        RCLCPP_INFO(get_logger(), "Setting [%s]", parameter.get_name().c_str());
+        RCLCPP_DEBUG(get_logger(), "Setting [%s]", parameter.get_name().c_str());
     }
-
-    rcl_interfaces::msg::SetParametersResult result;
-    result.successful = true;
-    result.reason = "success";
-
     return result;
 }
 
