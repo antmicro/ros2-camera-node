@@ -70,13 +70,12 @@ void CameraNode::camera_get_properties_callback(
     const camera_node::srv::CameraGetProperties::Request::SharedPtr request,
     camera_node::srv::CameraGetProperties::Response::SharedPtr response)
 {
-    for (auto property = camera_node::msg::CameraProperty();
-         const auto &[index, name, type, default_value] : camera->queryProperties())
+    for (auto property = camera_node::msg::CameraProperty(); const auto &queried_property : camera->queryProperties())
     {
-        property.index = index;
-        property.name = name;
-        property.type = static_cast<uint8_t>(type);
-        property.default_value = default_value;
+        property.index = queried_property.id;
+        property.name = queried_property.name;
+        property.type = static_cast<uint8_t>(queried_property.type);
+        property.default_value = queried_property.defaultValue;
 
         response->properties.push_back(property);
     }
@@ -131,21 +130,36 @@ void CameraNode::camera_frame_info_callback()
 
 void CameraNode::prepare_driver_parameters()
 {
-    for (auto &&[index, name, type, default_value] : camera->queryProperties())
+    const std::regex regex("[^A-z0-9\\s]");
+    for (auto &&queried_property : camera->queryProperties())
     {
-        const std::regex regex("[^A-z0-9\\s]");
+        rcl_interfaces::msg::ParameterDescriptor param_descriptor;
+        rcl_interfaces::msg::IntegerRange int_range;
         std::stringstream result;
 
-        std::regex_replace(std::ostream_iterator<char>(result), name.begin(), name.end(), regex, "");
-        name = result.str();
+        std::regex_replace(
+            std::ostream_iterator<char>(result),
+            queried_property.name.begin(),
+            queried_property.name.end(),
+            regex,
+            "");
+        std::string name = result.str();
 
         std::transform(name.begin(), name.end(), name.begin(), [](auto &c) { return std::tolower(c); });
         std::replace(name.begin(), name.end(), ' ', '_');
 
-        parameters_name_to_index["camera_driver_" + name] = index;
+        parameters_name_to_index["camera_driver_" + name] = queried_property.id;
+
         // Get current value instead of default
-        camera->get<int64_t>(index, default_value, true);
-        declare_parameter<int32_t>("camera_driver_" + name, default_value);
+        camera->get<int64_t>(queried_property.id, queried_property.defaultValue, true);
+
+        // Apply bounds to parameter
+        int_range.step = queried_property.step;
+        int_range.from_value = queried_property.minimum;
+        int_range.to_value = queried_property.maximum;
+        param_descriptor.integer_range.push_back(int_range);
+
+        declare_parameter<int32_t>("camera_driver_" + name, queried_property.defaultValue, param_descriptor);
     }
 }
 
