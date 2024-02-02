@@ -143,6 +143,8 @@ void CameraNode::prepare_driver_parameters()
         std::replace(name.begin(), name.end(), ' ', '_');
 
         parameters_name_to_index["camera_driver_" + name] = index;
+        // Get current value instead of default
+        camera->get<int64_t>(index, default_value, true);
         declare_parameter<int32_t>("camera_driver_" + name, default_value);
     }
 }
@@ -168,23 +170,28 @@ void CameraNode::generate_mat_mappings()
 
 CameraNode::CameraNode(const rclcpp::NodeOptions &options) : Node("camera_node", options)
 {
+    // Initialize device
     rcl_interfaces::msg::ParameterDescriptor param_descriptor;
     param_descriptor.read_only = true;
     declare_parameter<std::string>("camera_path", "/dev/video0", param_descriptor);
-    declare_parameter<std::vector<int64_t>>("camera_frame_dim", {0, 0});
-    declare_parameter<double>("camera_refresh_rate", 30.0);
-    declare_parameter<double>("camera_info_rate", 0.1);
-
     camera = std::make_unique<grabthecam::CameraCapture>(get_parameter("camera_path").as_string());
-    if (get_parameter("camera_frame_dim").as_integer_array() != std::vector<int64_t>{0, 0})
+
+    // Retrieve properties
+    prepare_driver_parameters();
+    generate_mat_mappings();
+
+    // Set device constraints
+    std::pair<int, int> size = camera->getFormat();
+    declare_parameter<std::vector<int64_t>>("camera_frame_dim", std::vector<int64_t>{size.first, size.second});
+    if (get_parameter("camera_frame_dim").as_integer_array() != std::vector<int64_t>{size.first, size.second})
     {
         camera->setFormat(
             static_cast<uint32_t>(get_parameter("camera_frame_dim").as_integer_array()[0]),
             static_cast<uint32_t>(get_parameter("camera_frame_dim").as_integer_array()[1]));
     }
 
-    prepare_driver_parameters();
-    generate_mat_mappings();
+    declare_parameter<double>("camera_refresh_rate", 30.0);
+    declare_parameter<double>("camera_info_rate", 0.1);
     camera_frame_counter = 0;
     camera_frame_time_point = std::chrono::steady_clock::now();
 
