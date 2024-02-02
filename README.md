@@ -1,6 +1,6 @@
 # ROS 2 CameraNode
 
-Copyright (c) 2022-2023 [Antmicro](https://www.antmicro.com)
+Copyright (c) 2022-2024 [Antmicro](https://www.antmicro.com)
 
 `CameraNode` is a ROS 2 node for streaming frames from V4L2 cameras.
 It provides parameters to manipulate camera properties and exposes a service to query and modify available properties.
